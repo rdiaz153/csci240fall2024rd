@@ -7,12 +7,18 @@
     Exception(s): N/A
 */
 #include <iostream>
-
 using namespace std;
+
+// Hint: use a triple nested loop, # of people (5, 10, 15, ...), # of experiments, process # of people, call function/method from exercise 1 //
 
 int main() 
 {
-  
+  int size;
+  for (int i = 0; i < size; i++)
+  {
+    
+  }
+
 
   return 0;
 }
