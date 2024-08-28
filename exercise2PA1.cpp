@@ -13,8 +13,8 @@ using namespace std;
 
 int main() 
 {
-  int size;
-  for (int i = 0; i < size; i++)
+  int numOfPeople;
+  for (int i = 0; i < numOfPeople; i++)
   {
     
   }
