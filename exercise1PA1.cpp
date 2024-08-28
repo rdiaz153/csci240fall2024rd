@@ -31,9 +31,13 @@ int main()
     int testSize1[] = {5, 7, 2, 6, 4};
     int testSize2[] = {5, 7, 2, 2, 5, 6, 4, 2};
 
-    int size1 = sizeof(testSize1);
+    int size1 = sizeof(testSize1) / sizeof(int);
+    int size2 = sizeof(testSize2) / sizeof(int);
 
-    cout << size1;
+    cout << "The number of duplicate values in the first array is " << duplicateValues(testSize1, size1) << "." << endl;
+    cout << "The number of duplicate values in the second array is " << duplicateValues(testSize2, size2) << "." << endl;
+
+    
 
 
     return 0;
