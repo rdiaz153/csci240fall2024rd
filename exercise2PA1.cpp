@@ -32,7 +32,8 @@ int main() {
 
     srand(time(0));
     const int experiments = 100;
-
+    cout << "Author: Ricardo Diaz\n";
+    
     for (int n = 5; n <= 100; n += 5) {
         int count = 0;
 
@@ -47,7 +48,7 @@ int main() {
                 count++;
             }
         }
-
+        cout << "Author: Ricardo Diaz.\n";
         cout << n << "\t" << count << " out of " << experiments << endl;
     }
 
