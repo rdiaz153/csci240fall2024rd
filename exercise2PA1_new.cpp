@@ -9,17 +9,18 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 using namespace std;
 
 // Hint: use a triple nested loop, # of people (5, 10, 15, ...), # of experiments, process # of people, call function/method from exercise 1 //
 
 // function from exercise 1
-int duplicateValues(int a[], int size) {
+int duplicateValues(vector<int> a, int size) {
     int count = 0;
 
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < a.size(); i++)
     {
-        for (int j = i + 1; j < size; j++)
+        for (int j = i + 1; j < a.size(); j++)
         {
             if (a[i] == a[j])
                 count++;
@@ -37,8 +38,7 @@ int main() {
         int count = 0;
 
         for (int i = 0; i < experiments; i++) {
-            int birthdays[100];  //changed n to 100
-
+            vector<int> birthdays;
             for (int j = 0; j < n; j++) {
                 birthdays[j] = rand() % 365 + 1;
             }
