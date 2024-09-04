@@ -54,7 +54,7 @@ int main() {
 
     while (numMistakes < 8) {
       output = createMistake(output);
-      num_mistakes++;
+      numMistakes++;
     }
 
     cout << i << ": " << output << std::endl;
