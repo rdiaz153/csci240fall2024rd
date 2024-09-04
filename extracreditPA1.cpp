@@ -20,9 +20,9 @@ using namespace std;
 string createMistake(string& sentence){
   string result = sentence;
   int len = sentence.length();
-  int mistake_type = rand() % 3;
+  int mistakeType = rand() % 3;
 
-  switch (mistake_type) {
+  switch (mistakeType) {
     case 0: {
       int pos = rand() % len;
       result[pos] = 'a' + rand() % 26;
