@@ -12,17 +12,46 @@
 
 namespace dsac::design {
 
+bool isPrime(int n) {
+  if (n <= 1) {
+    return false;
+  }
+
+  for (int i = 2; i < n; i++){
+    if (n % i == 0) {
+      return false;
+    }
+  }
+  
+  return true;
+}
 
 class PrimeProgression : public Progression {
   protected:
-  
+
   public: 
     PrimeProgression() : Progression(2) {}
+
     PrimeProgression(long start) : Progression(start) {
-      
+      if (!isPrime(start)) {
+        advance();
+      }      
     }
 
 
+};
+
 }
 
+int main() {
+  dsac::design::PrimeProgression prog;
+  dsac::design::PrimeProgression primeProg(97);
+
+  std::cout << "Normal Progression: ";
+  prog.print_progression(5);
+
+  std::cout << "Prime Progression starting from 97: ";
+  primeProg.print_progression(5);
+
+  return 0;
 }
