@@ -42,13 +42,56 @@ string createMistake(string& sentence){
   return result;
 }
 
+string createMistake(string& sentence, int n){
+  string result = sentence;
+  int mistakeType = rand() % 3;
+
+  switch (mistakeType) {
+    case 0: {
+      int pos = n;
+      result[pos] = 'a' + rand() % 26;
+      break;
+    }
+    case 1: {
+      int pos = n;
+      result.erase(pos, 1);
+      break;
+    }
+    case 2: {
+      int pos = n;
+      result.insert(pos, 1, 'a' + rand() % 26);
+      break;
+    }
+  }
+  return result;
+}
+
 int main() {
 
   srand(time(0));
-
   string sentence = "I will always use object-oriented design.";
 
-  for (int i = 1; i <= 50; i++) {
+  string sentences[50];
+  for (int i = 0; i < 50; i++) {
+    sentences[i] = sentence;
+  }
+
+  int randomIndices[8];
+
+  for (int i = 0; i < 8; i++) {
+    randomIndices[i] = rand() % 50;
+  }
+
+  for(int j : randomIndices) {
+    sentences[j] = createMistake(sentence, j);
+  }
+
+  for (int i = 0; i < 50; i++) {
+    cout << i + 1 << ": ";
+    cout << sentences[i] << endl;
+  }
+
+  /* for (int i = 1; i <= 50; i++) {
     string output = sentence;
     int numMistakes = 0;
 
@@ -58,7 +101,7 @@ int main() {
     }
 
     cout << i << ": " << output << std::endl;
-  }
+  }*/
 
   return 0;
 }
