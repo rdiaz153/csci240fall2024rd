@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Shared/vscode"
+		},
+		{
+			"name": "csci240fall2024rd",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}
