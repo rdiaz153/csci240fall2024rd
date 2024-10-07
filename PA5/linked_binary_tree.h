@@ -75,10 +75,18 @@ class LinkedBinaryTree {
     /// Returns a Position for the root (a null Position, if an empty tree)
     Position root() const { return Position(rt); }
 
-    /// Returns an inorder sequence of positions
+    void post_order(Position p, std::vector<Position>& result) const {
+        if (!p.is_null()) {
+            post_order(p.left(), result);
+            post_order(p.right(), result);
+            result.push_back(p);
+        }
+    }
+
+
     std::vector<Position> positions() const {
         std::vector<Position> gather;
-        if (rt) inorder(Position(rt), gather);
+        if (rt != nullptr) post_order(position(rt), gather);
         return gather;
     }
 
