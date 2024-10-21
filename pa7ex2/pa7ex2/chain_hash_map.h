@@ -25,10 +25,10 @@ class ChainHashMap : public AbstractHashMap<Key, Value, Hash> {
     
     void create_table() {
         table.clear();
-        table.resize(table_sz);                                  // fills with empty buckets
+        table.resize(Base::table_sz);                                  // fills with empty buckets
     }
 
-    class iter_rep : public abstract_iter_rep {                  // specialize abstract version
+    class iter_rep : public Base::abstract_iter_rep {                  // specialize abstract version
       public:
         const std::vector<Bucket>* tbl{nullptr};                 // need table to advance
         int bkt_num{0};                                          // which bucket in table?
@@ -83,15 +83,15 @@ class ChainHashMap : public AbstractHashMap<Key, Value, Hash> {
     const_iterator bucket_put(int h, const Key& k, const Value& v)  {  // calls put(k,v) on bucket h
         int old_size{table[h].size()};
         BCI result{table[h].put(k,v)};
-        sz += (table[h].size() - old_size);                            // one more if new key
+        Base::sz += (table[h].size() - old_size);                            // one more if new key
         return const_iterator(new iter_rep(&table, h, result));
     }
     
     const_iterator bucket_erase(int h, const_iterator loc) {           // calls erase(loc) on bucket h
         const_iterator next{loc};
         ++next;                                                        // precompute next location
-        table[h].erase(dynamic_cast<iter_rep*>(get_rep(loc))->bkt_iter);
-        sz--;
+        table[h].erase(dynamic_cast<iter_rep*>(Base::get_rep(loc))->bkt_iter);
+        Base::sz--;
         return next;
     }
 };

@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "extension-output-ms-vscode.cpptools-#2-C",
-      "program": "extension-output-ms-vscode.cpptools-#2-C/build/Debug/outDebug"
+      "cwd": "/Users/ricardo/vscode/csci240fall2024rd/PA7",
+      "program": "/Users/ricardo/vscode/csci240fall2024rd/PA7/build/Debug/outDebug"
     }
   ]
 }
