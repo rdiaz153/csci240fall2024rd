@@ -12,7 +12,7 @@ namespace dsac::search_tree {
 
 template <typename Key, typename Value, typename Compare=std::less<Key>>
 class TreeMap : public dsac::map::AbstractMap<Key,Value> {
-  protected:
+  public:
     typedef dsac::map::AbstractMap<Key,Value> Base;           // shorthand for the base class
 
   public:
@@ -21,7 +21,7 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     using typename Base::Entry;
     using typename Base::const_iterator;
     
-  protected:
+  public:
 
     /// ------------ nested BalanceableBinaryTree class -------------------
     /// A specialized version of the LinkedBinaryTree class with additional mutators to

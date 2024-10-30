@@ -22,8 +22,8 @@ string reverseKey(int key) {
 
 template<typename S, typename T>
 void search(TreeMap<S, T>& treeMap, int key) {
-    auto it = tree_map.find(key);
-    if (it != tree_map.end()) {
+    auto it = treeMap.find(key);
+    if (it != treeMap.end()) {
         cout << "Found: " << it->key() << " -> " << it->value() << endl;
     } else {
         cout << "Key " << key << " not found." << endl;
@@ -31,9 +31,7 @@ void search(TreeMap<S, T>& treeMap, int key) {
     
 }
 
-void printTree(AVLTreeMap<int, string>& map) {
-    
-}
+void printTree(AVLTreeMap<int, string>& map); 
 
 int main()
 {
@@ -54,7 +52,7 @@ int main()
     auto search8 = map.find(8);
 
     for (auto it = map.begin(); it != map.end(); ++it) {
-        cout << it->key() << " -> " << it->value() << " Height: " << map.height(it->key());
+        cout << it->key() << " -> " << it->value() << " Height: " << map.height(it->key()) << endl;
     }
 
     return 0;

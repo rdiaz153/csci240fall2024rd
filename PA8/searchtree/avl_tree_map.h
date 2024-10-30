@@ -5,7 +5,7 @@
 #include <utility>
 #include <vector>
 
-#include "..\searchtree\tree_map.h"
+#include "../searchtree/tree_map.h"
 
 namespace dsac::search_tree {
 
@@ -13,11 +13,17 @@ template <typename Key, typename Value, typename Compare=std::less<Key>>
 class AVLTreeMap : public TreeMap<Key,Value,Compare> {
   public:
     typedef TreeMap<Key,Value,Compare> Base;
-    using Base::tree, Base::aux, Base::set_aux, typename Base::Node;
+    using Base::tree, Base::aux, Base::set_aux, typename Base::Node, Base::search;
     
     /// Returns the height of the given node (nullptr is considered 0)
     int height(Node* p) const {
         return (p == nullptr ? 0 : aux(p));
+    }
+
+    int height(Key k) const {
+        Node* p = Base::search(k);
+        return height(p);
+        //return (p == nullptr ? 0 : aux(p));
     }
 
     /// Recomputes the height of the given position based on its children's heights

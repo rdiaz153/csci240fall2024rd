@@ -6,7 +6,7 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/ricardo/vscode/csci240fall2024rd/PA7",
+      "cwd": "/Users/ricardo/vscode/csci240fall2024rd/PA8",
       "program": "/Users/ricardo/vscode/csci240fall2024rd/PA7/build/Debug/outDebug"
     }
   ]
