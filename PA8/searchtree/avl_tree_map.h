@@ -11,7 +11,7 @@ namespace dsac::search_tree {
 
 template <typename Key, typename Value, typename Compare=std::less<Key>>
 class AVLTreeMap : public TreeMap<Key,Value,Compare> {
-  protected:
+  public:
     typedef TreeMap<Key,Value,Compare> Base;
     using Base::tree, Base::aux, Base::set_aux, typename Base::Node;
     
