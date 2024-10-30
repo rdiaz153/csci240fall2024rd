@@ -54,7 +54,7 @@ int main()
     auto search8 = map.find(8);
 
     for (auto it = map.begin(); it != map.end(); ++it) {
-        cout << it->key() << " -> " << it->value() << " Height: " << map.height()
+        cout << it->key() << " -> " << it->value() << " Height: " << map.height(it->key());
     }
 
     return 0;
