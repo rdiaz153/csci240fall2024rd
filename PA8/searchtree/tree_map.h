@@ -15,7 +15,10 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     typedef dsac::map::AbstractMap<Key,Value> Base;           // shorthand for the base class
 
   public:
-    using Base::empty, Base::erase, typename Base::Entry, typename Base::const_iterator;
+    using Base::empty;
+    using Base::erase;
+    using typename Base::Entry;
+    using typename Base::const_iterator;
     
   protected:
 
@@ -28,7 +31,8 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     class BalanceableBinaryTree : public TreeBase {
       public:
         friend TreeMap;
-        using TreeBase::rt, typename TreeBase::Node;
+        using TreeBase::rt;
+        using typename dsac::search_tree::TreeMap<Key, Value, Compare>::TreeBase::Node;
 
         // the root node that serves as the end() sentinel
         Node* sentinel() const { return TreeBase::rt; }
@@ -160,7 +164,8 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     }
         
     // a position within our map is described by a node pointer
-    using typename Base::abstract_iter_rep, Base::get_rep;
+    using typename Base::abstract_iter_rep;
+    using Base::get_rep;
     class iter_rep : public abstract_iter_rep {              // specialize abstract version
       public:
         Node* node;
@@ -185,7 +190,7 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     int size() const { return tree.size() - 1;  }   // disregard the end sentinel
 
     /// Returns a const_iterator to first entry
-    const_iterator begin() const {
+    const_iterator begin() const override {
         Node* walk = tree.sentinel();
         while (walk->left != nullptr)
             walk = walk->left;
@@ -193,10 +198,10 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     }
 
     /// Returns a const_iterator representing the end
-    const_iterator end() const { return const_iterator(new iter_rep(tree.rt)); }
+    const_iterator end() const override { return const_iterator(new iter_rep(tree.rt)); }
 
     /// Returns a const_iterator to the entry with a given key, or end() if no such entry exists
-    const_iterator find(const Key& k) const {
+    const_iterator find(const Key& k) const override {
         if (empty()) return end();
         Node* p{search(k)};
         const_cast<TreeMap*>(this)->rebalance_access(p);                  // find could trigger rebalance of tree
@@ -208,7 +213,7 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
 
     /// Associates given key with given value. If key already exists previous value is overwritten.
     /// Returns a const_iterator to the entry associated with the key
-    const_iterator put(const Key& k, const Value& v) {
+    const_iterator put(const Key& k, const Value& v) override {
         Node* p{search(k)};
         if (p != tree.rt && equals(k, key(p))) {                          // exact match
             p->element.first.value() = v;                                 // update entry's value
@@ -227,8 +232,8 @@ class TreeMap : public dsac::map::AbstractMap<Key,Value> {
     }
 
     /// Removes the entry indicated by the given iterator, and returns const_iterator to next entry in iteration order
-    const_iterator erase(const_iterator loc) {
-        Node* p = dynamic_cast<iter_rep*>(get_rep(loc))->node;
+    const_iterator erase(const_iterator loc) override {
+        Node* p = dynamic_cast<iter_rep*>(Base::get_rep(loc))->node;
         if (p->left != nullptr && p->right != nullptr) {         // p has two children
             Node* before = p->left;
             while (before->right != nullptr)

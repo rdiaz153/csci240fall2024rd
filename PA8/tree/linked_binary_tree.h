@@ -1,6 +1,6 @@
 #pragma once
-#include "tree.h"
-#include "binary_tree.h"
+#include "../tree/tree.h"
+#include "../tree/binary_tree.h"
 
 namespace dsac::tree {
 

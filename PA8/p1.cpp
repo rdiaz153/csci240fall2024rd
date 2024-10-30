@@ -1,6 +1,16 @@
+/*  Program: PA 8 Ex 1
+    Author: Ricardo Diaz
+    Class: CSCI 240
+    Date: 10/28/24
+    Description: PA 8 Exercise 1
+    I certify that the code below is my own work.
+    Exception(s): N/A
+*/
+
 #include <iostream>
 #include "searchtree/tree_map.h"
 #include <string>
+#include <algorithm>
 
 using namespace std;
 using namespace dsac::search_tree;
@@ -12,7 +22,7 @@ string reverseKey(int key){
 }
 
 template<typename S, typename T>
-void search(TreeMap<S, T> tree_map, int key){
+void search(TreeMap<S, T>& tree_map, int key){
     auto it = tree_map.find(key);
     if(it != tree_map.end())
         cout << "Found: " << it->key() << " -> " << it->value() << endl;
@@ -21,6 +31,7 @@ void search(TreeMap<S, T> tree_map, int key){
 }
 
 int main(){
+    cout << "Author: Ricardo Diaz" << endl;
     TreeMap<int, string> tree_map;
 
     tree_map.put(10, reverseKey(10));
@@ -31,13 +42,13 @@ int main(){
     tree_map.erase(8);
     tree_map.erase(10);
 
-    for(auto it = tree_map.begin(); it != tree_map.end(); it++){
-        cout << it->key() << " -> " << it->value() << endl;
-    }
-
     search(tree_map, 15);
     search(tree_map, 30);
     search(tree_map, 8);
+
+    for(auto it = tree_map.begin(); it != tree_map.end(); it++){
+        cout << it->key() << " -> " << it->value() << endl;
+    }
     // g++ p1.cpp -o p1.exe; ./p1.exe
 
     return 0;
