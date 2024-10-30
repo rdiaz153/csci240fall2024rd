@@ -19,12 +19,6 @@ class SimplePopMap {
 private:
     TreeMap<int, string> treeMap;
 
-    int height(TreeMap<int, string>::Node* node) const {
-        if (node == nullptr) {
-            return -1;
-        }
-        return 1 + max(height(node->left), height(node->right));
-    }
 public:
     SimplePopMap(const string& filename) {
         ifstream file(filename);
@@ -37,11 +31,12 @@ public:
             int code = stoi(codeStr);
             treeMap.put(code, value);
         }
-        cout << "Tree height: " << height(treeMap.) << endl;
+        cout << "Tree height: " << treeMap.height() << endl;
     }
 
     void find(int code) {
-        if (auto it != treeMap.end()) {
+        auto it = treeMap.find(code);
+        if (it != treeMap.end()) {
             cout << "Found: " << code << "-> " << it->value() << endl;
         } else {
             cout << "Code " << code << " not found." << endl;
@@ -72,15 +67,22 @@ public:
         }
     }
 
-    int height() const {
-        if (treeMap)
-    }
-
 };
 
 int main()
 {
     cout << "Author: Ricardo Diaz" << endl;
+    SimplePopMap map("popSmall.txt");
+    map.print();
+    map.find(6037);
+    map.find(6000);
+    map.insert(6066, "1, New County, CA");
+    map.insert(6065, "2000, Riverside, CA");
+    map.erase(6999);
+    map.erase(6075);
+    map.erase(6055);
+    map.print();
 
+    // g++ ex2.cpp -o ex2.exe; ./ex2.exe
     return 0;
 }
