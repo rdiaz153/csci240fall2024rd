@@ -46,7 +46,8 @@ int main()
     map.erase(8);
     map.erase(10);
 
-    
+    map._dump();
+
     auto search15 = map.find(15);
     auto search30 = map.find(30);
     auto search8 = map.find(8);
