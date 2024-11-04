@@ -11,6 +11,7 @@
 #include <unordered_set>
 #include <string>
 #include <fstream>
+#include <limits>
 
 using namespace std;
 
@@ -24,12 +25,13 @@ int polyHash(const string& s, int a) {
 
 int cyclicHash(const string& s, int shift) {
     const int U_INT_BITS{ std::numeric_limits<unsigned int>::digits };
-    int h{ 0 };
+    unsigned int h{ 0 };
     for (char c : s) {
-        h = (h << shift) | ( h  >> (U_INT_BITS - shift));
-        h += int(c);
+        h = (h << shift) | (h >> (U_INT_BITS - shift));
+        h += c;
     }
-    return (h < 0 ? -h : h);
+    int h1 = int(h);
+    return h1 < 0 ? -h1 : h1;
 }
 
 void process(const string& filename, int m) {

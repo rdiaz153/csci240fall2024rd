@@ -3,11 +3,22 @@
   "configurations": [
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
+      "type": "cppdbg",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/ricardo/vscode/csci240fall2024rd/PA8",
-      "program": "/Users/ricardo/vscode/csci240fall2024rd/PA8/build/Debug/outDebug"
+      "stopAtEntry": false,
+      "externalConsole": true,
+      "cwd": "c:/Users/Ricardo/Desktop/csci240/csci240fall2024rd/PA8",
+      "program": "c:/Users/Ricardo/Desktop/csci240/csci240fall2024rd/PA8/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
     }
   ]
 }
