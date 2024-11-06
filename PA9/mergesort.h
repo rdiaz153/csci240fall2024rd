@@ -16,10 +16,13 @@ void merge(const std::vector<T>& S1, const std::vector<T>& S2, std::vector<T>& S
     int i{0}, j{0}, k{0};
     while (k < S.size()) {
         comparisons++;
-        if (j == S2.size() || (i < S1.size() && comp(S1[i], S2[j])))
+        if (j == S2.size() || (i < S1.size() && comp(S1[i], S2[j]))) {
             S[k++] = S1[i++];                                // copy ith element of S1 to S
-        else
+            dataMoves++;
+        } else {
             S[k++] = S2[j++];                                // copy jth element of S2 to S
+            dataMoves++;
+        }
     }
 }
 
