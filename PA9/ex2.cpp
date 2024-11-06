@@ -67,12 +67,13 @@ int main()
     auto start = chrono::high_resolution_clock::now();
     merge_sort_bottom_up(small1k, less<int>());
     auto end = chrono::high_resolution_clock::now();
-    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start).count();
+    auto elapsed = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
 
     cout << endl << "small1k.txt details:" << endl;
     printDetails(small1k);
     cout << "Comparisons: " << comparisons << " Data Moves: " << dataMoves;
-    cout << " Time: " << elapsed << " microseconds." << endl;
+    cout << " Time: " << elapsed << " nanoseconds." << endl;
+    cout << elapsed;
 
     comparisons = 0;
     dataMoves = 0;
@@ -84,7 +85,7 @@ int main()
     cout << endl << "large100k.txt details:" << endl;
     printDetails(large100k);
     cout << "Comparisons: " << comparisons << " Data Moves: " << dataMoves;
-    cout << " Time: " << elapsed2 << " ms." << endl;
+    cout << " Time: " << elapsed2 << "ms." << endl;
  
 
 
