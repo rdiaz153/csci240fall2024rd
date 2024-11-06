@@ -61,7 +61,7 @@ void quick_sort_in_place(std::vector<T>& S, Compare comp, int a, int b) {
     int mid = a + (b - a) / 2;
     int pivotIndex = medianOf3(S, a, b);
     std::swap(S[pivotIndex], S[b]);
-    dataMoves++;
+    dataMoves++; 
 
     T pivot{S[b]};
     int left{a};
