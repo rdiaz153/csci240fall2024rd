@@ -99,7 +99,8 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "ctime": "cpp",
-    "xstring": "cpp"
+    "xstring": "cpp",
+    "chrono": "cpp"
   },
   "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
