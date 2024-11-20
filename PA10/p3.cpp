@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <iomanip>
+#include <vector>
 #include "heap_priority_queue.h"
 #include "linked_binary_tree.h"
 
@@ -17,77 +19,163 @@ using namespace dsac::tree;
 using namespace dsac::priority;
 
 class HuffmanTree {
-public:
-    char character;
-    int frequency;
-    HuffmanTree* left;
-    HuffmanTree* right;
+private:
+    struct Node {
+        char character;
+        int frequency;
+        LinkedBinaryTree<pair<char,int>> tree;
 
-    HuffmanTree(char c, int freq, HuffmanTree* l = nullptr, HuffmanTree* r = nullptr) : character(c), frequency(freq), left(l), right(r) {}
+        Node(int freq, char c) : character(c), frequency(freq) {
+            tree.add_root({c, freq});
+        }
 
-    HuffmanTree(int freq, HuffmanTree* l, HuffmanTree* r) : character('\0'), frequency(freq), left(l), right(r) {}
-    
-};
-    struct Compare {
-        bool operator()(HuffmanTree* a, HuffmanTree* b) {
-            return a->frequency > b->frequency;
+        Node(int freq, Node* left, Node* right) : character('*'), frequency(freq) {
+            tree.add_root({'*', freq});
+            tree.attach(tree.root(), left->tree, right->tree);
+        }
+
+        bool operator< (const Node& other) {
+            return frequency < other.frequency;
         }
     };
 
-    HuffmanTree* buildHuffmanTree(const string& text) {
-        unordered_map<char, int> freqMap;
+public:
+    unordered_map<char, int> freqMap;
+    string encodedBits;
+
+    void createHuffmanTree(const string& text) {
         for (char c : text) {
+            if (c == ' ') {
+                c = '_';
+            }
             freqMap[c]++;
         }
 
-        HeapPriorityQueue<HuffmanTree*, Compare> pq;
-        for (const auto& iter : freqMap) {
-            pq.insert(new HuffmanTree(iter.first, iter.second));
+    
+        HeapPriorityQueue<Node> pq;
+    
+
+        for (const auto& [character, frequency] : freqMap) {
+            pq.insert(Node(character, frequency));
         }
 
         while (pq.size() > 1) {
-            HuffmanTree* left = pq.min();
-            pq.remove_min();
-            HuffmanTree* right = pq.min();
+            Node* left = new Node(pq.min());
             pq.remove_min();
 
-            HuffmanTree* parent = new HuffmanTree(left->frequency + right->frequency, left, right);
-            pq.insert(parent);
+            Node* right = new Node(pq.min());
+            pq.remove_min();
+
+            Node total(left->frequency + right->frequency, left, right);
+            pq.insert(total);
+
+            delete left;
+            delete right;
         }
 
-        return pq.min();
+        Node root = pq.min();
+        pq.remove_min();
+
+        generateHCodes(root.tree, root.tree.root(), "");
+        
+        cout << "Text: \"" << text << endl;
+        cout << "Number of characters: " << text.size() << endl;
+        cout << "Huffman coding tree: " << endl;
+        printHuffmanTree(root.tree, root.tree.root());
+
+        this->root = root.tree.root();
+
+        printHCodeTable(text);
+    
     }
 
-    void printHuffmanTree(HuffmanTree* root, int depth = 0) {
-        if (!root) {
+    void printHCodeTable(const string& text) {
+        cout << endl << "Character frequency bits: " << endl;
+        for (const auto& [character, encoding] : hCodes) {
+            cout << character << "  " << freqMap[character] << "    " << encoding << endl;
+        }
+
+        int totalBits = 0;
+
+        for (char c : text) {
+            if (c == ' ') {
+                c = '_';
+            }
+            encodedBits += hCodes[c];
+            totalBits += hCodes[c].size();
+        }
+        cout << "Number of bits to encode message: " << totalBits << endl;
+        cout << encodedBits << endl;
+    }
+
+    string decode(const string& encodedBits) {
+        string decodedText = "";
+        LinkedBinaryTree<pair<char, int>>::Position curNode = this->root;
+
+        for (char bit : encodedBits) {
+            if (bit == '0') {
+                curNode = curNode.left();
+            } else if (bit == '1') {
+                curNode = curNode.right();
+            }
+
+            if (curNode.is_external()) {
+                decodedText += curNode.element().first;
+                curNode = this->root;
+            }
+        }
+        return decodedText;
+    }
+
+private:
+    unordered_map<char, string> hCodes;
+    void generateHCodes(const LinkedBinaryTree<pair<char, int>>& tree, LinkedBinaryTree<pair<char, int>>::Position position, const string& code) {
+        if (position.is_null()) {
+            return;
+        }
+        if (position.left().is_null() && position.right().is_null()) {
+            char character = position.element().first;
+            hCodes[character] = code;
             return;
         }
 
-        cout << string(depth * 2, ' ');
-        if (root->character == ' ') {
-            cout << "_" << "< -- this is a space\n";
-        } else {
-            cout << root->character << endl;
+        generateHCodes(tree, position.left(), code + "0");
+        generateHCodes(tree, position.right(), code + "1");
+    }
+
+    void printHuffmanTree(const LinkedBinaryTree<pair<char, int>>& tree, LinkedBinaryTree<pair<char, int>>::Position position, int depth = 0) {
+        if (position.is_null()) {
+            return;
         }
 
-        printHuffmanTree(root->left, depth + 1);
-        printHuffmanTree(root->right, depth + 1);
+        cout << string(depth * 4, ' ') << position.element().second << " " << position.element().first << endl;
+
+        printHuffmanTree(tree, position.left(), depth + 1);
+        printHuffmanTree(tree, position.right(), depth + 1);
     }
+
+    LinkedBinaryTree<pair<char,int>>::Position root;
+};
+
+void testRun(string text) {
+    HuffmanTree HM;
+    HM.createHuffmanTree(text);
+
+    string encodedBitsString = HM.encodedBits;
+
+    string decodedText = HM.decode(encodedBitsString);
+    cout << "Decoded Text: \"" << decodedText << "\"" << endl;
+}
 
 int main()
 {
     cout << "Author: Ricardo Diaz" << endl;
-    string text;
-    cout << "Enter text: ";
-    getline(cin, text);
+    cout << "Test case 1: " << endl;
+    testRun("more money needed");
 
-    HuffmanTree* root = buildHuffmanTree(text);
+    cout << endl << "Test case 2: " << endl;
+    testRun("aaabbb");
 
-    cout << "Text: \"" << text <<"\"" << endl;
-    cout << "number of characters: " << text.length() << endl;
-
-    cout << "Huffman coding tree: " << endl;
-    printHuffmanTree(root);
 
     // g++ p3.cpp -o p3.exe; ./p3.exe
     return 0;

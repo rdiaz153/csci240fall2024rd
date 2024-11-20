@@ -3,13 +3,11 @@
   "configurations": [
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "cppvsdbg",
+      "type": "lldb",
       "request": "launch",
       "args": [],
-      "stopAtEntry": false,
-      "console": "externalTerminal",
-      "cwd": "c:/Users/Ricardo/Desktop/csci240/csci240fall2024rd/PA10",
-      "program": "c:/Users/Ricardo/Desktop/csci240/csci240fall2024rd/PA10/build/Debug/outDebug"
+      "cwd": "/Users/ricardo/vscode/csci240fall2024rd/PA10",
+      "program": "/Users/ricardo/vscode/csci240fall2024rd/PA10/build/Debug/outDebug"
     }
   ]
 }

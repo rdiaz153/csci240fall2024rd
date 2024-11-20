@@ -7,10 +7,13 @@
     Exception(s): N/A
 */
 #include <iostream>
+#include <string>
 #include <unordered_map>
 #include <vector>
 #include <string>
 #include <chrono>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -99,6 +102,31 @@ int find_kmp(const string& text, const string& pattern, int& comparisons) {
     return -1;                                           // reached end without match
 }
 
+void filePatterns(string filename) {
+    string pattern;
+    cout << "Enter your pattern: ";
+    cin >> pattern;
+
+    ifstream inFile(filename);
+    ostringstream oss;
+    oss << inFile.rdbuf();
+
+    string file = oss.str();
+
+    int comparisons = 0;
+
+    int index = find_brute(file, pattern, comparisons);
+    cout << "Brute Force: Index = " << index << ", Comparisons = " << comparisons << endl;
+
+    index = find_boyer_moore(file, pattern, comparisons);
+    cout << "Boyer-Moore: Index = " << index << ", Comparisons = " << comparisons << endl;
+
+    index = find_kmp(file, pattern, comparisons);
+    cout << "KMP: Index = " << index << ", Comparisons = " << comparisons << endl;
+
+    
+}
+
 int main()
 {
     cout << "Author: Ricardo Diaz" << endl;
@@ -127,8 +155,18 @@ int main()
         cout << "KMP: Index = " << index << ", Comparisons = " << comparisons << endl;
     }
 
+   /*cout << "US Declaration of Independence file: \n";
+    filePatterns(files[0]);
+    filePatterns("USDeclIndFormatted.txt");
+    cout << "Human DNA file: \n";
+    //filePatterns("humanDNA.txt");
+    //filePatterns("humanDNA.txt");
 
+    vector<string> files = {"humanDNA.txt", "USDeclIndFormatted.txt"};
+    vector<string> dnaPatterns = {"CAAATGGCCTG", "CAAATGGGCCTG"};
+    vector<string> usDecPatterns = {"computer", "therein"};
 
+    */
     // g++ p2.cpp -o p2.exe; ./p2.exe
     return 0;
 }
