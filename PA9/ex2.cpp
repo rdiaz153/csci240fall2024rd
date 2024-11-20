@@ -84,7 +84,7 @@ int main()
     cout << endl << "large100k.txt details:" << endl;
     printDetails(large100k);
     cout << "Comparisons: " << comparisons << " Data Moves: " << dataMoves;
-    cout << " Time: " << elapsed2 << " ms." << endl;
+    cout << " Time: " << elapsed2 << " milliseconds." << endl;
  
 
 

@@ -83,21 +83,20 @@ int main()
 
     // for the sorted list, sort it again and output the number of inversions
     // number of comparisons, and data moves.
-    
+    int smallInversions2 = countInversions(smallArr, size);
     insertionSort(smallArr, size);
     cout << "Sorted small array (again): ";
     printArray(smallArr, size);
-    int smallInversions2 = countInversions(smallArr, size);
-    cout <<"Inversions: " << smallInversions2 << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl;
+    cout << "Inversions: " << smallInversions2 << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl << endl;
 
     // reverse the sorted list, sort it again, output everything again
     reverse(smallArr, smallArr + size);
+    int smallInversions3 = countInversions(smallArr, size);
     insertionSort(smallArr, size);
 
     cout << "Sorted reversed list: ";
     printArray(smallArr, size);
-    int smallInversions3 = countInversions(smallArr, size);
-    cout << "Inversions: " << smallInversions3 << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl;
+    cout << "Inversions: " << smallInversions3 << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl << endl;
     
     int largeList[1000];
     ifstream inputFile("small1k.txt");
@@ -106,11 +105,13 @@ int main()
     }
     inputFile.close();
 
-    auto start = chrono::high_resolution_clock::now();
+    cout << "Random order 1k list: " << endl << endl;
+
     int numInversions = countInversions(largeList, 1000);
+    auto start = chrono::high_resolution_clock::now();
     insertionSort(largeList, 1000);
     auto end = chrono::high_resolution_clock::now();
-    auto elapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+    auto elapsed = chrono::duration_cast<chrono::microseconds>(end - start).count();
     
     cout << "First 5 values of the 1,000 list: ";
     for (int i = 0; i < 5; ++i) {
@@ -125,6 +126,30 @@ int main()
     cout << endl;
 
     cout << "Inversions: " << numInversions << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl;
+    cout << "Time: " << elapsed << " µs." << endl;
+
+    cout << "Sorted 1k list: " << endl << endl;
+
+    int numInversions2 = countInversions(largeList, 1000);
+    auto start2 = chrono::high_resolution_clock::now();
+    insertionSort(largeList, 1000);
+    auto end2 = chrono::high_resolution_clock::now();
+    auto elapsed2 = chrono::duration_cast<chrono::microseconds>(end2 - start2).count();
+    
+    cout << "First 5 values of the 1,000 list: ";
+    for (int i = 0; i < 5; ++i) {
+        cout << largeList[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Last 5 values of the 1,000 list: ";
+    for (int i = 995; i < 1000; ++i) {
+        cout << largeList[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Inversions: " << numInversions2 << " Comparisons: " << comparisons << " Data Moves: " << dataMoves << endl;
+    cout << "Time: " << elapsed2 << " µs." << endl;
 
 
     // g++ ex1.cpp -o ex1.exe; ./ex1.exe
