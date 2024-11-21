@@ -25,7 +25,7 @@ private:
         int frequency;
         LinkedBinaryTree<pair<char,int>> tree;
 
-        Node(int freq, char c) : character(c), frequency(freq) {
+        Node(int c, char freq) : character(c), frequency(freq) {
             tree.add_root({c, freq});
         }
 
@@ -34,7 +34,7 @@ private:
             tree.attach(tree.root(), left->tree, right->tree);
         }
 
-        bool operator< (const Node& other) {
+        bool operator< (const Node& other) const {
             return frequency < other.frequency;
         }
     };
@@ -169,6 +169,7 @@ void testRun(string text) {
 
 int main()
 {
+    cout << "Test" << endl;
     cout << "Author: Ricardo Diaz" << endl;
     cout << "Test case 1: " << endl;
     testRun("more money needed");
